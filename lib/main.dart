@@ -33,6 +33,8 @@ class _QuizPageState extends State<QuizPage> {
     'A slug\'s blood is green.'
   ];
 
+  List<bool> answers = [false, true, true];
+
   int nextQuestionIndex(int curIndex) {
     int nextIdx = curIndex + 1;
     return nextIdx > questions.length - 1 ? 0 : nextIdx;
@@ -42,7 +44,6 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    String currentQuestion = questions[questionIndex];
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -53,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                currentQuestion,
+                questions[questionIndex],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -78,13 +79,16 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
+                  if (answers[questionIndex] == true) {
+                    print('User got right');
+                  } else {
+                    print('User got wrong');
+                  }
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
                   questionIndex = nextQuestionIndex(questionIndex);
-                  currentQuestion = questions[questionIndex];
                   print('questionIndex: $questionIndex');
-//                  currentQuestion = questions[questionIndex];
                 });
               },
             ),
@@ -104,6 +108,18 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                setState(() {
+                  scoreKeeper.add(
+                    Icon(Icons.check, color: Colors.yellow),
+                  );
+                  if (answers[questionIndex] == false) {
+                    print('User got right');
+                  } else {
+                    print('User got wrong');
+                  }
+                  questionIndex = nextQuestionIndex(questionIndex);
+                  print('questionIndex: $questionIndex');
+                });
               },
             ),
           ),
