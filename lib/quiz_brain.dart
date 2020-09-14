@@ -1,6 +1,6 @@
 import 'package:quizzler/question.dart';
 
-class QuestionBrain {
+class QuizBrain {
   List<Question> questionList = [
     Question('Some cats are actually allergic to humans', true),
     Question('You can lead a cow down stairs but not up stairs.', false),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'question_brain.dart';
+import 'quiz_brain.dart';
 
 void main() => runApp(Quizzler());
-QuestionBrain questionBrain = QuestionBrain();
+QuizBrain quizBrain = QuizBrain();
 
 class Quizzler extends StatelessWidget {
   @override
@@ -43,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionBrain.questionList[questionIndex].questionText,
+                quizBrain.questionList[questionIndex].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -68,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (questionBrain.questionList[questionIndex].questionAnswer == true) {
+                  if (quizBrain.questionList[questionIndex].questionAnswer == true) {
                     print('User got right');
                   } else {
                     print('User got wrong');
@@ -76,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  questionIndex = questionBrain.nextQuestionIndex(questionIndex);
+                  questionIndex = quizBrain.nextQuestionIndex(questionIndex);
                   print('questionIndex: $questionIndex');
                 });
               },
@@ -101,12 +101,12 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  if (questionBrain.questionList[questionIndex].questionAnswer == false) {
+                  if (quizBrain.questionList[questionIndex].questionAnswer == false) {
                     print('User got right');
                   } else {
                     print('User got wrong');
                   }
-                  questionIndex = questionBrain.nextQuestionIndex(questionIndex);
+                  questionIndex = quizBrain.nextQuestionIndex(questionIndex);
                   print('questionIndex: $questionIndex');
                 });
               },
