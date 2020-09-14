@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'question_brain.dart';
 
 void main() => runApp(Quizzler());
+QuestionBrain questionBrain = QuestionBrain();
 
 class Quizzler extends StatelessWidget {
   @override
@@ -28,17 +29,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
-  List<Question> questionList = [
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(q: 'Approximately one quarter of human bones are in the feet.', a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
-
-  int nextQuestionIndex(int curIndex) {
-    int nextIdx = curIndex + 1;
-    return nextIdx > questionList.length - 1 ? 0 : nextIdx;
-  }
-
   int questionIndex = 0;
 
   @override
@@ -53,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionList[questionIndex].questionText,
+                questionBrain.questionList[questionIndex].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -78,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (questionList[questionIndex].questionAnswer == true) {
+                  if (questionBrain.questionList[questionIndex].questionAnswer == true) {
                     print('User got right');
                   } else {
                     print('User got wrong');
@@ -86,7 +76,7 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  questionIndex = nextQuestionIndex(questionIndex);
+                  questionIndex = questionBrain.nextQuestionIndex(questionIndex);
                   print('questionIndex: $questionIndex');
                 });
               },
@@ -111,12 +101,12 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  if (questionList[questionIndex].questionAnswer == false) {
+                  if (questionBrain.questionList[questionIndex].questionAnswer == false) {
                     print('User got right');
                   } else {
                     print('User got wrong');
                   }
-                  questionIndex = nextQuestionIndex(questionIndex);
+                  questionIndex = questionBrain.nextQuestionIndex(questionIndex);
                   print('questionIndex: $questionIndex');
                 });
               },
