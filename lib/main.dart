@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 QuizBrain quizBrain = QuizBrain();
@@ -39,10 +40,52 @@ class _QuizPageState extends State<QuizPage> {
       print('User got wrong');
       icon = Icon(Icons.close, color: Colors.red);
     }
-    quizBrain.nextQuestion();
     setState(() {
       scoreKeeper.add(icon);
     });
+    if (quizBrain.isLastQuestion()) {
+      resetQuestion();
+    } else {
+      quizBrain.nextQuestion();
+    }
+  }
+
+  resetQuestion() {
+    var correctCnt = 0;
+    scoreKeeper.forEach((element) {
+      if (element.icon == Icons.check) {
+        correctCnt++;
+      }
+    });
+
+    String score = '$correctCnt / ${quizBrain.questionCount()}';
+    _onBasicAlertPressed(context, '$score');
+  }
+
+  // The easiest way for creating RFlutter Alert
+  _onBasicAlertPressed(context, String score) {
+    Alert(
+      context: context,
+      type: AlertType.success,
+      title: "Finished all Quizzes!",
+      desc: "Your score is $score",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Close",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            setState(() {
+              quizBrain.initQuestion();
+              scoreKeeper = [];
+            });
+            Navigator.pop(context);
+          },
+        )
+      ],
+//      alertAnimation: FadeAlertAnimation,
+    ).show();
   }
 
   @override
@@ -112,9 +155,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/

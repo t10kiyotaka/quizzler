@@ -23,10 +23,22 @@ class QuizBrain {
         true),
   ];
 
-  int nextQuestion() {
+  void nextQuestion() {
     if (_questionIndex < _questionList.length - 1) {
       _questionIndex++;
     }
+  }
+
+  bool isLastQuestion() {
+    return _questionIndex == _questionList.length - 1;
+  }
+
+  void initQuestion() {
+    _questionIndex = 0;
+  }
+
+  int questionCount() {
+    return _questionList.length;
   }
 
   String getQuestionText() {
