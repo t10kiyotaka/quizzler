@@ -43,7 +43,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.questionList[questionIndex].questionText,
+                quizBrain.getQuestionText(questionIndex),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -68,7 +68,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (quizBrain.questionList[questionIndex].questionAnswer == true) {
+                  if (quizBrain.getQuestionAnswer(questionIndex) == true) {
                     print('User got right');
                   } else {
                     print('User got wrong');
@@ -101,7 +101,7 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  if (quizBrain.questionList[questionIndex].questionAnswer == false) {
+                  if (quizBrain.getQuestionAnswer(questionIndex) == false) {
                     print('User got right');
                   } else {
                     print('User got wrong');
