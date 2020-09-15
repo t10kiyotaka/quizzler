@@ -29,8 +29,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
 
-  int questionIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,7 +41,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                quizBrain.getQuestionText(questionIndex),
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -68,7 +66,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (quizBrain.getQuestionAnswer(questionIndex) == true) {
+                  if (quizBrain.getQuestionAnswer() == true) {
                     print('User got right');
                   } else {
                     print('User got wrong');
@@ -76,8 +74,7 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  questionIndex = quizBrain.nextQuestionIndex(questionIndex);
-                  print('questionIndex: $questionIndex');
+                  quizBrain.nextQuestion();
                 });
               },
             ),
@@ -101,13 +98,12 @@ class _QuizPageState extends State<QuizPage> {
                   scoreKeeper.add(
                     Icon(Icons.check, color: Colors.yellow),
                   );
-                  if (quizBrain.getQuestionAnswer(questionIndex) == false) {
+                  if (quizBrain.getQuestionAnswer() == false) {
                     print('User got right');
                   } else {
                     print('User got wrong');
                   }
-                  questionIndex = quizBrain.nextQuestionIndex(questionIndex);
-                  print('questionIndex: $questionIndex');
+                  quizBrain.nextQuestion();
                 });
               },
             ),
